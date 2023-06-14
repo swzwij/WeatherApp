@@ -6,6 +6,12 @@ using static HourlyTemperatureData;
 
 public class WeatherSystem : MonoBehaviour
 {
+    [SerializeField]
+    private HourlyTemperatureItem temperatureItem;
+
+    [SerializeField]
+    private Transform hourlyContent;
+
     private void Awake()
     {
         GetHourlyTemperature();
@@ -31,6 +37,8 @@ public class WeatherSystem : MonoBehaviour
                     continue;
 
                 print(time + " -- " + data.temperature_2m[i]);
+                HourlyTemperatureItem item = Instantiate(temperatureItem, hourlyContent);
+                item.Init(time, data.temperature_2m[i]);
             }
         };
 
