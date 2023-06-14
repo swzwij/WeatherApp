@@ -15,11 +15,21 @@ public class WeatherSystem : MonoBehaviour
     {
         Action<HourlyTemperatureData> onComplete = (response) =>
         {
-            print(DateTime.Now);
+            DateTime currentDateTime = DateTime.Now;
+
             HourlyData data = response.hourly;
             for (int i = 0; i < data.time.Length; i++)
             {
                 string time = data.time[i][^5..];
+                string timeHour = time[..2];
+                int hour = int.Parse(timeHour);
+
+                string dayString = data.time[i][^8..][..2];
+                int dayInt = int.Parse(dayString);
+
+                if(dayInt == currentDateTime.Day && hour < currentDateTime.Hour)
+                    continue;
+
                 print(time + " -- " + data.temperature_2m[i]);
             }
         };
