@@ -39,6 +39,8 @@ public class HourlyTemperatureItem : MonoBehaviour
         hourText.text = hour;
         temperatureText.text = $"{temp}°";
 
+        background.color = genNumber % 2 == 0 ? baseColor : offColor;
+
         SetTempHeight(temp, minTemp, maxTemp);
 
         SetWeatherSummary(weatherCode);
