@@ -1,5 +1,3 @@
-using System;
-
 public class HourlyTemperatureData
 {
     public float latitude;
@@ -12,7 +10,7 @@ public class HourlyTemperatureData
     public HourlyUnits hourly_units;
     public HourlyData hourly;
 
-    [Serializable]
+    [System.Serializable]
     public class HourlyUnits
     {
         public string time;
@@ -20,7 +18,7 @@ public class HourlyTemperatureData
         public string weathercode;
     }
 
-    [Serializable]
+    [System.Serializable]
     public class HourlyData
     {
         public string[] time;
