@@ -11,7 +11,7 @@ public class APIManager : SingletonBehaviour<APIManager>
 
     public void GetHourlyTemperature(double latitude, double longitude, int days, string startDate, string endDate, Action<HourlyTemperatureData> onComplete = null, Action onFailure = null)
     {
-        string url = $"latitude={latitude}&longitude={longitude}&hourly=temperature_2m&forecast_days={1}&start_date={startDate}&end_date={endDate}";
+        string url = $"latitude={latitude}&longitude={longitude}&hourly=temperature_2m,weathercode&forecast_days={1}&start_date={startDate}&end_date={endDate}";
         StartCoroutine(HourlyTemperatureCall(_baseURL + url, onComplete, onFailure));
     }
 

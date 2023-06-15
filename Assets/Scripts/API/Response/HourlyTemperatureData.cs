@@ -17,6 +17,7 @@ public class HourlyTemperatureData
     {
         public string time;
         public string temperature_2m;
+        public string weathercode;
     }
 
     [Serializable]
@@ -24,5 +25,6 @@ public class HourlyTemperatureData
     {
         public string[] time;
         public float[] temperature_2m;
+        public int[] weathercode;
     }
 }
