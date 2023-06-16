@@ -66,7 +66,7 @@ public class HourlyTemperatureItem : MonoBehaviour
     {
         string weatherSummary = string.Empty;
 
-        weatherImage.sprite = weatherIcons[weatherCode];
+        weatherImage.sprite = weatherIcons[0];
 
         switch (weatherCode)
         {

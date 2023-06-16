@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using static DailyData;
@@ -19,6 +20,9 @@ public class WeatherSystem : MonoBehaviour
     [SerializeField]
     private Transform dailyContent;
 
+    [SerializeField]
+    private TMP_Text _locationText;
+
     private void Awake()
     {
         GetHourlyTemperature();
@@ -35,7 +39,18 @@ public class WeatherSystem : MonoBehaviour
         string today = FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
         string tomorrow = FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
-        APIManager.Instance.GetHourlyTemperature(52.64, 5.06, 1, today, tomorrow, onComplete, onFailure);
+#if UNITY_EDITOR
+        double latitude = 52.64;
+        double longitude = 5.06;
+#else
+        GPSManager GPSManager = GPSManager.Instance;
+
+        double latitude = GPSManager.Latitude;
+        double longitude = GPSManager.Longitude;
+#endif
+        _locationText.text = $"{latitude}, {longitude}";
+
+        APIManager.Instance.GetHourlyTemperature(latitude, longitude, 1, today, tomorrow, onComplete, onFailure);
     }
 
     private void GetDailyWeather()
@@ -48,7 +63,17 @@ public class WeatherSystem : MonoBehaviour
         string today = FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
         string tomorrow = FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
-        APIManager.Instance.GetDailyData(52.64, 5.06, today, tomorrow, onComplete, onFailure);
+#if UNITY_EDITOR
+        double latitude = 52.64;
+        double longitude = 5.06;
+#else
+        GPSManager GPSManager = GPSManager.Instance;
+
+        double latitude = GPSManager.Latitude;
+        double longitude = GPSManager.Longitude;
+#endif
+
+        APIManager.Instance.GetDailyData(latitude, longitude, today, tomorrow, onComplete, onFailure);
     }
 
     private string FormatDate(int year, int month, int day)
