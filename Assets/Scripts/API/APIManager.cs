@@ -58,4 +58,29 @@ public class APIManager : SingletonBehaviour<APIManager>
         DailyData response = JsonUtility.FromJson<DailyData>(request.downloadHandler.text);
         onComplete?.Invoke(response);
     }
+
+    public void GetLocationFromCoordinates(LocationCoordinates location, Action<LocationData> onComplete, Action onFailure)
+    {
+        string url = $"https://geocode.maps.co/reverse?lat={location.Latitude}&lon={location.Longitude}";
+        StartCoroutine(LocationFromCoordinatesCall(url, onComplete, onFailure));
+    }
+
+    private IEnumerator LocationFromCoordinatesCall(string url, Action<LocationData> onComplete, Action onFailure)
+    {
+        UnityWebRequest request = new(url)
+        {
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            onFailure?.Invoke();
+            yield break;
+        }
+
+        LocationData response = JsonUtility.FromJson<LocationData>(request.downloadHandler.text);
+        onComplete?.Invoke(response);
+    }
 }

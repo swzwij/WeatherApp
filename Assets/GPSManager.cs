@@ -1,5 +1,6 @@
 using SingletonBehaviour;
 using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -10,53 +11,53 @@ public class GPSManager : SingletonBehaviour<GPSManager>
     /// <summary>
     /// Holds the last location.
     /// </summary>
-    private Vector2 _lastLocation;
-
-    private double _latitude;
-
-    private double _longitude;
-
-    public double Latitude => _latitude;
-
-    public double Longitude => _longitude;
+    private LocationCoordinates _lastLocation;
 
     /// <summary>
     /// Getting the last used location.
     /// </summary>
-    public Vector2 LastLocation => _lastLocation;
+    public LocationCoordinates LastLocation => _lastLocation;
 
     /// <summary>
     /// Event for when the location is gotten.
     /// </summary>
-    public Action<Vector2> onGetLocation;
+    public Action<LocationCoordinates> onGetLocation;
 
     /// <summary>
     /// Get Location.
     /// </summary>
-    private void Awake() => GetLocation();
+    private void Awake() => StartCoroutine(GetLocation());
 
     /// <summary>
     /// Getting the location.
     /// </summary>
-    private void GetLocation()
+    private IEnumerator GetLocation()
     {
+#if UNITY_EDITOR
+        LocationCoordinates location = new(52.64, 5.06);
+
+        yield return new WaitForSeconds(2f);
+
+        _lastLocation = location;
+        onGetLocation?.Invoke(location);
+#else
         if (!Input.location.isEnabledByUser)
         {
             Debug.Log("Location services are not enabled on the device.");
-            return;
+            yield break;
         }
 
         Input.location.Start();
 
+        yield return new WaitUntil(() => Input.location.status == LocationServiceStatus.Running);
+
         LocationInfo locationInfo = Input.location.lastData;
-
-        _latitude = locationInfo.latitude;
-        _longitude = locationInfo.longitude;
-
-        Vector2 location = new((float)_latitude, (float)_longitude);
+        LocationCoordinates location = new(locationInfo.latitude, locationInfo.longitude);
 
         Input.location.Stop();
 
+        _lastLocation = location;
         onGetLocation?.Invoke(location);
+#endif
     }
 }

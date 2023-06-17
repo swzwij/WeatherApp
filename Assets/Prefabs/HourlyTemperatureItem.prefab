@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -804,8 +804,8 @@ MonoBehaviour:
   TemperatureTransform: {fileID: 7415322378854778750}
   weatherImage: {fileID: 5592371222703599880}
   background: {fileID: 5592371221738176823}
-  baseColor: {r: 0, g: 0, b: 0, a: 1}
-  offColor: {r: 0.105882354, g: 0.105882354, b: 0.105882354, a: 1}
+  baseColor: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
+  offColor: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 1}
   weatherIcons:
   - {fileID: 21300000, guid: d1a0a35798562f34996ac56403502532, type: 3}
   - {fileID: 21300000, guid: 8ddb948f898c87044bb3cafeea2f846e, type: 3}

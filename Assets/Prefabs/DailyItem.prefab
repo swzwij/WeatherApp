@@ -155,8 +155,8 @@ MonoBehaviour:
   minTemperatureText: {fileID: 4352858924408770090}
   maxTemperatureText: {fileID: 947725273266007832}
   background: {fileID: 2761388853521066320}
-  baseColor: {r: 0, g: 0, b: 0, a: 1}
-  offColor: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
+  baseColor: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
+  offColor: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 1}
   precipitaionSumText: {fileID: 168735062795782118}
   tempBar: {fileID: 7569071366050435385}
   timeText: {fileID: 947725272201504811}
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1141,7 +1141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

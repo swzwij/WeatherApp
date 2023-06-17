@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
-using static DailyData;
-using static HourlyTemperatureData;
 
 public class WeatherSystem : MonoBehaviour
 {
@@ -23,13 +19,21 @@ public class WeatherSystem : MonoBehaviour
     [SerializeField]
     private TMP_Text _locationText;
 
-    private void Awake()
+    private void OnEnable()
     {
-        GetHourlyTemperature();
-        GetDailyWeather();
+        GPSManager.Instance.onGetLocation += GetHourlyTemperature;
+        GPSManager.Instance.onGetLocation += GetDailyWeather;
+        GPSManager.Instance.onGetLocation += SetLocation;
     }
 
-    private void GetHourlyTemperature()
+    private void OnDisable()
+    {
+        GPSManager.Instance.onGetLocation -= GetHourlyTemperature;
+        GPSManager.Instance.onGetLocation -= GetDailyWeather;
+        GPSManager.Instance.onGetLocation -= SetLocation;
+    }
+
+    private void GetHourlyTemperature(LocationCoordinates location)
     {
         Action<HourlyTemperatureData> onComplete = (response) => HandleHourlyResponse(response);
         Action onFailure = () => Debug.LogError("Failed to get hourly temperature");
@@ -39,41 +43,20 @@ public class WeatherSystem : MonoBehaviour
         string today = FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
         string tomorrow = FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
-#if UNITY_EDITOR
-        double latitude = 52.64;
-        double longitude = 5.06;
-#else
-        GPSManager GPSManager = GPSManager.Instance;
-
-        double latitude = GPSManager.Latitude;
-        double longitude = GPSManager.Longitude;
-#endif
-        _locationText.text = $"{latitude}, {longitude}";
-
-        APIManager.Instance.GetHourlyTemperature(latitude, longitude, 1, today, tomorrow, onComplete, onFailure);
+        APIManager.Instance.GetHourlyTemperature(location.Latitude, location.Longitude, 1, today, tomorrow, onComplete, onFailure);
     }
 
-    private void GetDailyWeather()
+    private void GetDailyWeather(LocationCoordinates location)
     {
         Action<DailyData> onComplete = (response) => HandleDailyReponse(response);
         Action onFailure = () => Debug.LogError("Failed to get daily data");
 
         DateTime currentDateTime = DateTime.Now;
-        DateTime TomorrowDateTime = DateTime.Now.AddDays(6);
+        DateTime TomorrowDateTime = DateTime.Now.AddDays(14);
         string today = FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
         string tomorrow = FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
-#if UNITY_EDITOR
-        double latitude = 52.64;
-        double longitude = 5.06;
-#else
-        GPSManager GPSManager = GPSManager.Instance;
-
-        double latitude = GPSManager.Latitude;
-        double longitude = GPSManager.Longitude;
-#endif
-
-        APIManager.Instance.GetDailyData(latitude, longitude, today, tomorrow, onComplete, onFailure);
+        APIManager.Instance.GetDailyData(location.Latitude, location.Longitude, today, tomorrow, onComplete, onFailure);
     }
 
     private string FormatDate(int year, int month, int day)
@@ -122,7 +105,7 @@ public class WeatherSystem : MonoBehaviour
         float maxTemp = Mathf.NegativeInfinity;
         float minTemp = Mathf.Infinity;
 
-        HourlyData data = response.hourly;
+        HourlyTemperatureData.HourlyData data = response.hourly;
 
         for (int i = 0; i < data.time.Length; i++)
         {
@@ -152,5 +135,13 @@ public class WeatherSystem : MonoBehaviour
             HourlyTemperatureItem item = Instantiate(temperatureItem, hourlyContent);
             item.Init(time, temp, data.weathercode[i], minTemp, maxTemp, i);
         }
+    }
+
+    private void SetLocation(LocationCoordinates location)
+    {
+        Action<LocationData> onComplete = (response) => _locationText.text = $"{response.address.town}, {response.address.road}";
+        Action onFailure = () => Debug.LogError("Failed to get location data");
+
+        APIManager.Instance.GetLocationFromCoordinates(location, onComplete, onFailure);
     }
 }
