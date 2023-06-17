@@ -12,6 +12,9 @@ public class DailyItem : MonoBehaviour
     private RectTransform maxTemperature;
 
     [SerializeField]
+    private RectTransform rainRect;
+
+    [SerializeField]
     private TMP_Text minTemperatureText;
 
     [SerializeField]
@@ -35,24 +38,26 @@ public class DailyItem : MonoBehaviour
     [SerializeField]
     private TMP_Text timeText;
 
-    public void Init(string time, float minTemp, float maxTemp, float precipitaionSum, float windspeed, int windDirection, float overallMaxTemp, float overallMinTemp, int genNumber)
+    public void Init(string time, float minTemp, float maxTemp, float precipitaionSum, float windspeed, int windDirection, float overallMaxTemp, float overallMinTemp, int genNumber, float precipitaionSumMin, float precipitaionSumMax)
     {
         minTemperatureText.text = $"{minTemp}";
         maxTemperatureText.text = $"{maxTemp}";
 
-        SetTempHeight(minTemperature, minTemp, overallMinTemp, overallMaxTemp);
-        SetTempHeight(maxTemperature, maxTemp, overallMinTemp, overallMaxTemp);
+        SetBarHeight(minTemperature, minTemp, overallMinTemp, overallMaxTemp);
+        SetBarHeight(maxTemperature, maxTemp, overallMinTemp, overallMaxTemp);
+
+        SetBarHeight(rainRect, precipitaionSum, precipitaionSumMin, precipitaionSumMax);
 
         SetTempBar();
 
         background.color = genNumber % 2 == 0 ? baseColor : offColor;
 
-        precipitaionSumText.text = $"{precipitaionSum}mm";
+        precipitaionSumText.text = $"{precipitaionSum}";
 
         timeText.text = time[^5..];
     }
 
-    private void SetTempHeight(RectTransform temperatureTransform ,float temp, float minTemp, float maxTemp)
+    private void SetBarHeight(RectTransform temperatureTransform ,float temp, float minTemp, float maxTemp)
     {
         float range = maxTemp - minTemp;
         float pos = temp - minTemp;
