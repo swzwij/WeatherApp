@@ -1,4 +1,5 @@
 using DTT.UI.ProceduralUI;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -46,15 +47,15 @@ public class DailyItem : MonoBehaviour
         SetBarHeight(minTemperature, minTemp, overallMinTemp, overallMaxTemp);
         SetBarHeight(maxTemperature, maxTemp, overallMinTemp, overallMaxTemp);
 
-        SetBarHeight(rainRect, precipitaionSum, precipitaionSumMin, precipitaionSumMax);
+        SetRainBarHeight(rainRect, precipitaionSum, precipitaionSumMin, precipitaionSumMax);
 
         SetTempBar();
 
         background.color = genNumber % 2 == 0 ? baseColor : offColor;
 
-        precipitaionSumText.text = $"{precipitaionSum}";
+        precipitaionSumText.text = $"{precipitaionSum}mm";
 
-        timeText.text = time[^5..];
+        timeText.text = GetDayOfWeek(time);
     }
 
     private void SetBarHeight(RectTransform temperatureTransform ,float temp, float minTemp, float maxTemp)
@@ -73,6 +74,22 @@ public class DailyItem : MonoBehaviour
         temperatureTransform.anchorMax = anchorMax;
     }
 
+    private void SetRainBarHeight(RectTransform temperatureTransform, float temp, float minTemp, float maxTemp)
+    {
+        float range = maxTemp - minTemp;
+        float pos = temp - minTemp;
+        float newPos = (pos / range) * 1;
+
+        Vector2 anchorMax = temperatureTransform.anchorMax;
+        
+        if (newPos == 0)
+            newPos = -1;
+
+        anchorMax.y = newPos;
+
+        temperatureTransform.anchorMax = anchorMax;
+    }
+
     private void SetTempBar()
     {
         Vector2 anchorMin = tempBar.anchorMin;
@@ -83,5 +100,19 @@ public class DailyItem : MonoBehaviour
 
         tempBar.anchorMin = anchorMin;
         tempBar.anchorMax = anchorMax;
+    }
+
+    private string GetDayOfWeek(string time)
+    {
+        string date = time;
+        string[] dateParts = date.Split('-');
+
+        string year = dateParts[0];
+        string month = dateParts[1];
+        string day = dateParts[2];
+
+        DateTime dateValue = new(int.Parse(year), int.Parse(month), int.Parse(day));
+        string dayOfWeek = $"{dateValue.DayOfWeek}"[..3];
+        return $"{dayOfWeek} {day}";
     }
 }
