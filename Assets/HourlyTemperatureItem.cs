@@ -42,8 +42,6 @@ public class HourlyTemperatureItem : MonoBehaviour
         background.color = genNumber % 2 == 0 ? baseColor : offColor;
 
         SetTempHeight(temp, minTemp, maxTemp);
-
-        SetWeatherSummary(weatherCode);
     }
 
     private void SetTempHeight(float temp, float minTemp, float maxTemp)
@@ -60,46 +58,5 @@ public class HourlyTemperatureItem : MonoBehaviour
 
         TemperatureTransform.anchorMin = anchorMin;
         TemperatureTransform.anchorMax = anchorMax;
-    }
-
-    private void SetWeatherSummary(int weatherCode)
-    {
-        string weatherSummary = string.Empty;
-
-        weatherImage.sprite = weatherIcons[0];
-
-        switch (weatherCode)
-        {
-            case 0:
-                weatherSummary = "clear";
-                break;
-            case 1:
-                weatherSummary = "partly cloudy";
-                break;
-            case 2:
-                weatherSummary = "cloudy";
-                break;
-            case 3:
-                weatherSummary = "dust";
-                break;
-            case 4:
-                weatherSummary = "fog";
-                break;
-            case 5:
-                weatherSummary = "drizzle";
-                break;
-            case 6:
-                weatherSummary = "rain";
-                break;
-            case 7:
-                weatherSummary = "snow";
-                break;
-            case 8:
-                weatherSummary = "showers";
-                break;
-            case 9:
-                weatherSummary = "thunderstorm";
-                break;
-        }
     }
 }
