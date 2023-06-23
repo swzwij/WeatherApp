@@ -18,6 +18,6 @@ public class LocationManager : MonoBehaviour
         Action onFailure = () => Debug.LogError("Failed to get location data");
 
         LocationRequest request = new(location.Latitude, location.Longitude);
-        new_APIManager.Instance.GetCall(request, onComplete, onFailure);
+        APIManager.Instance.GetCall(request, onComplete, onFailure);
     }
 }

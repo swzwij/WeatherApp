@@ -47,7 +47,7 @@ namespace WeatherApp.WeatherSystem
             string tomorrow = DateUtils.FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
             HourlyTemperatureRequest request = new(location.Latitude, location.Longitude, today, tomorrow);
-            new_APIManager.Instance.GetCall(request, onComplete, onFailure);
+            APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
         private void GetHourlyRain(LocationCoordinates location)
@@ -61,7 +61,7 @@ namespace WeatherApp.WeatherSystem
             string tomorrow = DateUtils.FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
             HourlyRainRequest request  = new(location.Latitude, location.Longitude, today, tomorrow);
-            new_APIManager.Instance.GetCall(request, onComplete, onFailure);
+            APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
         private void HandleHourlyTemperatureResponse(HourlyTemperatureData response)
