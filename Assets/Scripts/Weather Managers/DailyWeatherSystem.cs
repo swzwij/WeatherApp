@@ -43,16 +43,16 @@ namespace WeatherApp.WeatherSystem
 
             for (int i = 0; i < data.time.Length; i++)
             {
-                float newMaxtemp = data.temperature2mMax[i];
-                float newMinTemp = data.temperature2mMin[i];
+                float newMaxtemp = data.temperature_2m_max[i];
+                float newMinTemp = data.temperature_2m_min[i];
 
                 if (newMaxtemp > maxTemp)
                     maxTemp = newMaxtemp;
                 if (newMinTemp < minTemp)
                     minTemp = newMinTemp;
 
-                float newMinRain = data.precipitationSum[i];
-                float newMaxRain = data.precipitationSum[i];
+                float newMinRain = data.precipitation_sum[i];
+                float newMaxRain = data.precipitation_sum[i];
 
                 if (newMaxRain > maxRain)
                     maxRain = newMaxRain;
@@ -63,7 +63,7 @@ namespace WeatherApp.WeatherSystem
             for (int i = 0; i < data.time.Length; i++)
             {
                 DailyItem item = Instantiate(_dailyItem, _dailyContentTransform);
-                item.Init(data.time[i], data.temperature2mMin[i], data.temperature2mMax[i], data.precipitationSum[i], data.windspeed10mMax[i], data.winddirection10mDominant[i], maxTemp, minTemp, i, minRain, maxRain);
+                item.Init(data.time[i], data.temperature_2m_min[i], data.temperature_2m_max[i], data.precipitation_sum[i], data.windspeed_10m_max[i], data.winddirection_10m_dominant[i], maxTemp, minTemp, i, minRain, maxRain);
             }
         }
     }

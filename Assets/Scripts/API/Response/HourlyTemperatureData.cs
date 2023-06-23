@@ -5,47 +5,47 @@ namespace WeatherApp.API
         /// <summary>
         /// The latitude of where the data has come from.
         /// </summary>
-        public readonly float latitude;
+        public float latitude;
 
         /// <summary>
         /// The lonitude of where the data has come from
         /// </summary>
-        public readonly float longitude;
+        public float longitude;
 
         /// <summary>
         /// The time it took to get the data.
         /// </summary>
-        public readonly float generationtimeMS;
+        public float generationtimeMS;
 
         /// <summary>
         /// The offset of the utc.
         /// </summary>
-        public readonly int utcOffsetSeconds;
+        public int utcOffsetSeconds;
 
         /// <summary>
         /// The timezone.
         /// </summary>
-        public readonly string timezone;
+        public string timezone;
 
         /// <summary>
         /// The timezone abbreviation.
         /// </summary>
-        public readonly string timezoneAbbreviation;
+        public string timezoneAbbreviation;
 
         /// <summary>
         /// The elevation of where the weather data has come from.
         /// </summary>
-        public readonly float elevation;
+        public float elevation;
 
         /// <summary>
         /// The hourly units.
         /// </summary>
-        public readonly HourlyUnits hourlyUnits;
+        public HourlyUnits hourlyUnits;
 
         /// <summary>
         /// The hourly data.
         /// </summary>
-        public readonly HourlyData hourly;
+        public HourlyData hourly;
 
         /// <summary>
         /// Class to handle the hourly units.
@@ -56,17 +56,17 @@ namespace WeatherApp.API
             /// <summary>
             /// The hour.
             /// </summary>
-            public readonly string time;
+            public string time;
 
             /// <summary>
             /// The temperature.
             /// </summary>
-            public readonly string temperature_2m;
+            public string temperature_2m;
 
             /// <summary>
             /// The weather code.
             /// </summary>
-            public readonly string weathercode;
+            public string weathercode;
         }
 
         /// <summary>
@@ -78,17 +78,17 @@ namespace WeatherApp.API
             /// <summary>
             /// List of times with an interval of 60 minutes.
             /// </summary>
-            public readonly string[] time;
+            public string[] time;
 
             /// <summary>
             /// List of temperatures of each hour.
             /// </summary>
-            public readonly float[] temperature_2m;
+            public float[] temperature_2m;
 
             /// <summary>
             /// List of weather codes of each hour.
             /// </summary>
-            public readonly int[] weathercode;
+            public int[] weathercode;
         }
     }
 }

@@ -1161,8 +1161,8 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
   _roundingMode: 0
   _roundingAmount:
-  - 0.8
-  - 0.8
+  - 1
+  - 1
   - 0
   - 0
   _borderThickness: 0.5
@@ -1595,7 +1595,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 998065187}
-  - component: {fileID: 998065186}
   - component: {fileID: 998065188}
   m_Layer: 0
   m_Name: API Manager
@@ -1604,19 +1603,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &998065186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 998065185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 346bf1be62e53d34b89e5d1759f716ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseURL: https://api.open-meteo.com/v1/forecast?
 --- !u!4 &998065187
 Transform:
   m_ObjectHideFlags: 0
