@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WeatherApp.Utils;
+using WeatherApp.API;
+using UnityEditor.PackageManager.Requests;
 
 namespace WeatherApp.WeatherSystem
 {
@@ -44,7 +46,8 @@ namespace WeatherApp.WeatherSystem
             string today = DateUtils.FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
             string tomorrow = DateUtils.FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
-            APIManager.Instance.GetHourlyTemperature(location.Latitude, location.Longitude, 1, today, tomorrow, onComplete, onFailure);
+            HourlyTemperatureRequest request = new(location.Latitude, location.Longitude, today, tomorrow);
+            new_APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
         private void GetHourlyRain(LocationCoordinates location)
@@ -57,7 +60,8 @@ namespace WeatherApp.WeatherSystem
             string today = DateUtils.FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
             string tomorrow = DateUtils.FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
 
-            APIManager.Instance.GetHourlyRain(location.Latitude, location.Longitude, 1, today, tomorrow, onComplete, onFailure);
+            HourlyRainRequest request  = new(location.Latitude, location.Longitude, today, tomorrow);
+            new_APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
         private void HandleHourlyTemperatureResponse(HourlyTemperatureData response)

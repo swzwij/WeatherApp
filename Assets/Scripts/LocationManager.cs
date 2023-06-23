@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using WeatherApp.API;
 
 public class LocationManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LocationManager : MonoBehaviour
         Action<LocationData> onComplete = (response) => _locationText.text = $"{response.address.town}";
         Action onFailure = () => Debug.LogError("Failed to get location data");
 
-        APIManager.Instance.GetLocationFromCoordinates(location, onComplete, onFailure);
+        LocationRequest request = new(location.Latitude, location.Longitude);
+        new_APIManager.Instance.GetCall(request, onComplete, onFailure);
     }
 }

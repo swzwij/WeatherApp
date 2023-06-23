@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using WeatherApp.API;
 using WeatherApp.Utils;
 
 namespace WeatherApp.WeatherSystem
@@ -22,11 +23,12 @@ namespace WeatherApp.WeatherSystem
             Action onFailure = () => Debug.LogError("Failed to get daily data");
 
             DateTime currentDateTime = DateTime.Now;
-            DateTime TomorrowDateTime = DateTime.Now.AddDays(14);
+            DateTime twoWeeksDateTime = DateTime.Now.AddDays(14);
             string today = DateUtils.FormatDate(currentDateTime.Year, currentDateTime.Month, currentDateTime.Day);
-            string tomorrow = DateUtils.FormatDate(TomorrowDateTime.Year, TomorrowDateTime.Month, TomorrowDateTime.Day);
+            string twoWeeks = DateUtils.FormatDate(twoWeeksDateTime.Year, twoWeeksDateTime.Month, twoWeeksDateTime.Day);
 
-            APIManager.Instance.GetDailyData(location.Latitude, location.Longitude, today, tomorrow, onComplete, onFailure);
+            DailyRequest request = new(location.Latitude, location.Longitude, today, twoWeeks);
+            new_APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
         private void HandleDailyReponse(DailyData response)
