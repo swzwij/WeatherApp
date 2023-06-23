@@ -2,6 +2,7 @@ using SingletonBehaviour;
 using System;
 using System.Collections;
 using UnityEngine;
+using WeatherApp.Utils;
 
 /// <summary>
 /// Class to handle getting the gps location of the device.

@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using WeatherApp.API;
+using WeatherApp.Utils;
 
 public class LocationManager : MonoBehaviour
 {
