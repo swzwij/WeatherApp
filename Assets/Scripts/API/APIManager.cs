@@ -108,4 +108,23 @@ public class APIManager : SingletonBehaviour<APIManager>
         LocationData response = JsonUtility.FromJson<LocationData>(request.downloadHandler.text);
         onComplete?.Invoke(response);
     }
+
+    private IEnumerator APICall<T>(string url, Action<T> onComplete, Action onFailure)
+    {
+        UnityWebRequest request = new UnityWebRequest(url)
+        {
+            downloadHandler = new DownloadHandlerBuffer()
+        };
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            onFailure?.Invoke();
+            yield break;
+        }
+
+        T response = JsonUtility.FromJson<T>(request.downloadHandler.text);
+        onComplete?.Invoke(response);
+    }
 }

@@ -747,7 +747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7415322378052773949}
   - component: {fileID: 7415322378052773951}
-  - component: {fileID: 7415322378052773920}
+  - component: {fileID: 5988734619664416589}
   m_Layer: 5
   m_Name: HourlyTemperatureItem
   m_TagString: Untagged
@@ -786,7 +786,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7415322378052773948}
   m_CullTransparentMesh: 1
---- !u!114 &7415322378052773920
+--- !u!114 &5988734619664416589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -795,28 +795,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7415322378052773948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69cf6085cc647b54d8d1d0a690e13f39, type: 3}
+  m_Script: {fileID: 11500000, guid: ea088645e8fda3748ae001c763396d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hourText: {fileID: 7415322377756721228}
-  temperatureText: {fileID: 7415322378854778751}
-  weatherSummaryText: {fileID: 0}
-  TemperatureTransform: {fileID: 7415322378854778750}
-  weatherImage: {fileID: 5592371222703599880}
-  background: {fileID: 5592371221738176823}
-  baseColor: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
-  offColor: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 1}
-  weatherIcons:
-  - {fileID: 21300000, guid: d1a0a35798562f34996ac56403502532, type: 3}
-  - {fileID: 21300000, guid: 8ddb948f898c87044bb3cafeea2f846e, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
-  - {fileID: 21300000, guid: 13254d900aae5f0408e92bde22cc79a6, type: 3}
+  _hourText: {fileID: 7415322377756721228}
+  _valueText: {fileID: 7415322378854778751}
+  _valueTransform: {fileID: 7415322378854778750}
+  _valueSuffix: "\xB0"
+  _weatherImage: {fileID: 8081183109465547990}
+  _background: {fileID: 5592371221738176823}
+  _baseColor: {r: 0, g: 0, b: 0, a: 1}
+  _offColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
 --- !u!1 &7415322378854778749
 GameObject:
   m_ObjectHideFlags: 0

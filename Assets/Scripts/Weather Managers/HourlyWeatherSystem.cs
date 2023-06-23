@@ -8,19 +8,19 @@ namespace WeatherApp.WeatherSystem
     public class HourlyWeatherSystem : MonoBehaviour
     {
         [SerializeField]
-        private HourlyTemperatureItem _hourlyTemperatureItem;
+        private HourlyItem _hourlyTemperatureItem;
 
         [SerializeField]
-        private HourlyRainItem _hourlyRainItem;
+        private HourlyItem _hourlyRainItem;
 
         [SerializeField]
         private Transform _contentTransform;
 
-        private List<HourlyRainItem> rainItems = new();
+        private List<HourlyItem> rainItems = new();
 
-        private List<HourlyTemperatureItem> temperatureItems = new();
+        private List<HourlyItem> temperatureItems = new();
 
-        public Action onGetHourlyTemperature;
+        public Action onGetHourlyRain;
 
         private void OnEnable()
         {
@@ -93,11 +93,9 @@ namespace WeatherApp.WeatherSystem
 
                 float temp = data.temperature_2m[i];
 
-                HourlyTemperatureItem item = Instantiate(_hourlyTemperatureItem, _contentTransform);
+                HourlyItem item = Instantiate(_hourlyTemperatureItem, _contentTransform);
                 item.Init(time, temp, data.weathercode[i], minTemp, maxTemp, i);
                 temperatureItems.Add(item);
-
-                onGetHourlyTemperature?.Invoke();
             }
         }
 
@@ -134,9 +132,11 @@ namespace WeatherApp.WeatherSystem
 
                 float temp = data.precipitation[i];
 
-                HourlyRainItem item = Instantiate(_hourlyRainItem, _contentTransform);
+                HourlyItem item = Instantiate(_hourlyRainItem, _contentTransform);
                 item.Init(time, temp, data.weathercode[i], minTemp, maxTemp, i);
                 rainItems.Add(item);
+
+                onGetHourlyRain?.Invoke();
             }
         }
 

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using UnityEngine;
 using WeatherApp.Tabs;
 using WeatherApp.WeatherSystem;
@@ -14,20 +14,24 @@ public class ContentManager : MonoBehaviour
     private void OnEnable()
     {
         _tabManager.onSwitchTab += SwitchTab;
-        _weatherSystem.onGetHourlyTemperature += () => StartCoroutine(Init());
+        _weatherSystem.onGetHourlyRain += Init;
     }
 
-    private void OnDisable() => _tabManager.onSwitchTab -= SwitchTab;
+    private void OnDisable()
+    {
+        _tabManager.onSwitchTab -= SwitchTab;
+        _weatherSystem.onGetHourlyRain -= Init;
+    }
 
     private void SwitchTab(TabType tabType)
     {
         ShowTempContent(tabType == TabType.Temp);
     }
 
-    private IEnumerator Init()
+    private void Init()
     {
-        yield return new WaitForSeconds(0.5f);
         ShowTempContent(true);
+        LoadingScreen.Instance.ShowLoadingScreen(false);
     }
 
     private void ShowTempContent(bool show)
