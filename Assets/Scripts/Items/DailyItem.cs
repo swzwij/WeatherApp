@@ -1,118 +1,173 @@
 using DTT.UI.ProceduralUI;
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using WeatherApp.Utils;
 
-public class DailyItem : MonoBehaviour
+namespace WeatherApp.WeatherSystem
 {
-    [SerializeField]
-    private RectTransform minTemperature;
-
-    [SerializeField]
-    private RectTransform maxTemperature;
-
-    [SerializeField]
-    private RectTransform rainRect;
-
-    [SerializeField]
-    private TMP_Text minTemperatureText;
-
-    [SerializeField]
-    private TMP_Text maxTemperatureText;
-
-    [SerializeField]
-    private RoundedImage background;
-
-    [SerializeField]
-    private Color baseColor;
-
-    [SerializeField]
-    private Color offColor;
-
-    [SerializeField]
-    private TMP_Text precipitaionSumText;
-
-    [SerializeField]
-    private RectTransform tempBar;
-
-    [SerializeField]
-    private TMP_Text timeText;
-
-    public void Init(string time, float minTemp, float maxTemp, float precipitaionSum, float windspeed, int windDirection, float overallMaxTemp, float overallMinTemp, int genNumber, float precipitaionSumMin, float precipitaionSumMax)
+    /// <summary>
+    /// Class to handle the daily item.
+    /// </summary>
+    public class DailyItem : MonoBehaviour
     {
-        minTemperatureText.text = $"{minTemp}";
-        maxTemperatureText.text = $"{maxTemp}";
+        /// <summary>
+        /// reference to the min temperature rect.
+        /// </summary>
+        [SerializeField]
+        private RectTransform minTemperatureRect;
 
-        SetBarHeight(minTemperature, minTemp, overallMinTemp, overallMaxTemp);
-        SetBarHeight(maxTemperature, maxTemp, overallMinTemp, overallMaxTemp);
+        /// <summary>
+        /// Reference to the max temperature rect.
+        /// </summary>
+        [SerializeField]
+        private RectTransform maxTemperatureRect;
 
-        SetRainBarHeight(rainRect, precipitaionSum, precipitaionSumMin, precipitaionSumMax);
+        /// <summary>
+        /// Reference to the rain rect.
+        /// </summary>
+        [SerializeField]
+        private RectTransform rainRect;
 
-        SetTempBar();
+        /// <summary>
+        /// Reference to the text displaying the min temperature.
+        /// </summary>
+        [SerializeField]
+        private TMP_Text minTemperatureText;
 
-        background.color = genNumber % 2 == 0 ? baseColor : offColor;
+        /// <summary>
+        /// Reference to the text displaying the max temperature.
+        /// </summary>
+        [SerializeField]
+        private TMP_Text maxTemperatureText;
 
-        precipitaionSumText.text = $"{precipitaionSum}mm";
+        /// <summary>
+        /// Reference to the background.
+        /// </summary>
+        [SerializeField]
+        private RoundedImage background;
 
-        timeText.text = GetDayOfWeek(time);
-    }
+        /// <summary>
+        /// The base color of the item.
+        /// </summary>
+        [SerializeField]
+        private Color baseColor;
 
-    private void SetBarHeight(RectTransform temperatureTransform ,float temp, float minTemp, float maxTemp)
-    {
-        float range = maxTemp - minTemp;
-        float pos = temp - minTemp;
-        float newPos = (pos / range) * 1;
+        /// <summary>
+        /// The off color of the item.
+        /// </summary>
+        [SerializeField]
+        private Color offColor;
 
-        Vector2 anchorMin = temperatureTransform.anchorMin;
-        Vector2 anchorMax = temperatureTransform.anchorMax;
+        /// <summary>
+        /// Reference to the displaying the rain precipitation.
+        /// </summary>
+        [SerializeField]
+        private TMP_Text precipitaionSumText;
 
-        anchorMin.y = newPos;
-        anchorMax.y = newPos;
+        /// <summary>
+        /// Reference to teh temperature bar.
+        /// </summary>
+        [SerializeField]
+        private RectTransform tempBar;
 
-        temperatureTransform.anchorMin = anchorMin;
-        temperatureTransform.anchorMax = anchorMax;
-    }
+        /// <summary>
+        /// Rerference to the text displaying the date.
+        /// </summary>
+        [SerializeField]
+        private TMP_Text timeText;
 
-    private void SetRainBarHeight(RectTransform temperatureTransform, float temp, float minTemp, float maxTemp)
-    {
-        float range = maxTemp - minTemp;
-        float pos = temp - minTemp;
-        float newPos = (pos / range) * 1;
+        /// <summary>
+        /// Initialize the daily item.
+        /// </summary>
+        /// <param name="date">The date of the item.</param>
+        /// <param name="minTemp">The min temperature of the day.</param>
+        /// <param name="maxTemp">The max temperautre of the day.</param>
+        /// <param name="precipitaionSum">The amount of rain that will fall that day.</param>
+        /// <param name="windspeed">The max windspeed that day.</param>
+        /// <param name="windDirection">The wind direction that day.</param>
+        /// <param name="overallMaxTemp">The overall max temp of the next week.</param>
+        /// <param name="overallMinTemp">The overall min temp of the next week.</param>
+        /// <param name="genNumber">What number item this is.</param>
+        /// <param name="precipitaionSumMin">The overall min rain of the next week.</param>
+        /// <param name="precipitaionSumMax">The overall max rain of the next week.</param>
+        public void Init(string date, float minTemp, float maxTemp, float precipitaionSum, float windspeed, int windDirection, float overallMaxTemp, float overallMinTemp, int genNumber, float precipitaionSumMin, float precipitaionSumMax)
+        {
+            minTemperatureText.text = $"{minTemp}";
+            maxTemperatureText.text = $"{maxTemp}";
 
-        Vector2 anchorMax = temperatureTransform.anchorMax;
-        
-        if (newPos == 0)
-            newPos = -1;
+            SetMinMaxTemperatureHeight(minTemperatureRect, minTemp, overallMinTemp, overallMaxTemp);
+            SetMinMaxTemperatureHeight(maxTemperatureRect, maxTemp, overallMinTemp, overallMaxTemp);
 
-        anchorMax.y = newPos;
+            SetRainBarHeight(rainRect, precipitaionSum, precipitaionSumMin, precipitaionSumMax);
 
-        temperatureTransform.anchorMax = anchorMax;
-    }
+            SetTemperatureBar();
 
-    private void SetTempBar()
-    {
-        Vector2 anchorMin = tempBar.anchorMin;
-        Vector2 anchorMax = tempBar.anchorMax;
+            background.color = genNumber % 2 == 0 ? baseColor : offColor;
 
-        anchorMin.y = minTemperature.anchorMin.y;
-        anchorMax.y = maxTemperature.anchorMax.y;
+            precipitaionSumText.text = $"{precipitaionSum}mm";
 
-        tempBar.anchorMin = anchorMin;
-        tempBar.anchorMax = anchorMax;
-    }
+            timeText.text = DateUtils.GetDayOfWeek(date);
+        }
 
-    private string GetDayOfWeek(string time)
-    {
-        string date = time;
-        string[] dateParts = date.Split('-');
+        /// <summary>
+        /// Setting the min max temperature height.
+        /// </summary>
+        /// <param name="temperatureTransform">The rect transform.</param>
+        /// <param name="temp">The temperature.</param>
+        /// <param name="minTemp">The minimum temp.</param>
+        /// <param name="maxTemp">The maximum temp.</param>
+        private void SetMinMaxTemperatureHeight(RectTransform temperatureTransform, float temp, float minTemp, float maxTemp)
+        {
+            float range = maxTemp - minTemp;
+            float pos = temp - minTemp;
+            float newPos = (pos / range) * 1;
 
-        string year = dateParts[0];
-        string month = dateParts[1];
-        string day = dateParts[2];
+            Vector2 anchorMin = temperatureTransform.anchorMin;
+            Vector2 anchorMax = temperatureTransform.anchorMax;
 
-        DateTime dateValue = new(int.Parse(year), int.Parse(month), int.Parse(day));
-        string dayOfWeek = $"{dateValue.DayOfWeek}"[..3];
-        return $"{dayOfWeek} {day}";
+            anchorMin.y = newPos;
+            anchorMax.y = newPos;
+
+            temperatureTransform.anchorMin = anchorMin;
+            temperatureTransform.anchorMax = anchorMax;
+        }
+
+        /// <summary>
+        /// Setting the rain bar height.
+        /// </summary>
+        /// <param name="rainTransform">The transform.</param>
+        /// <param name="rain">The rain amount.</param>
+        /// <param name="minRain">The min rain.</param>
+        /// <param name="maxRain">The max rain.</param>
+        private void SetRainBarHeight(RectTransform rainTransform, float rain, float minRain, float maxRain)
+        {
+            float range = maxRain - minRain;
+            float pos = rain - minRain;
+            float newPos = (pos / range) * 1;
+
+            Vector2 anchorMax = rainTransform.anchorMax;
+
+            if (newPos == 0)
+                newPos = -1;
+
+            anchorMax.y = newPos;
+
+            rainTransform.anchorMax = anchorMax;
+        }
+
+        /// <summary>
+        /// Setting the temp bar.
+        /// </summary>
+        private void SetTemperatureBar()
+        {
+            Vector2 anchorMin = tempBar.anchorMin;
+            Vector2 anchorMax = tempBar.anchorMax;
+
+            anchorMin.y = minTemperatureRect.anchorMin.y;
+            anchorMax.y = maxTemperatureRect.anchorMax.y;
+
+            tempBar.anchorMin = anchorMin;
+            tempBar.anchorMax = anchorMax;
+        }
     }
 }
