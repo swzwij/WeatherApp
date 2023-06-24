@@ -229,8 +229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918a9ef295da28845a1265b5051afe0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minTemperature: {fileID: 4352858924408770091}
-  maxTemperature: {fileID: 947725273266007833}
+  minTemperatureRect: {fileID: 4352858924408770091}
+  maxTemperatureRect: {fileID: 947725273266007833}
   rainRect: {fileID: 5789337432790011651}
   minTemperatureText: {fileID: 4352858924408770090}
   maxTemperatureText: {fileID: 947725273266007832}
@@ -468,8 +468,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1119,8 +1119,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
