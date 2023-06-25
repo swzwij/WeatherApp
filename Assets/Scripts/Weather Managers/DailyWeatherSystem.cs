@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using WeatherApp.API;
 using WeatherApp.Utils;
+using WeatherApp.Location;
 
 namespace WeatherApp.WeatherSystem
 {

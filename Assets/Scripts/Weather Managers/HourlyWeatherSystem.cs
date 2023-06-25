@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WeatherApp.Utils;
 using WeatherApp.API;
+using WeatherApp.Location;
 
 namespace WeatherApp.WeatherSystem
 {

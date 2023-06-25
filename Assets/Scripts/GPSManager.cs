@@ -4,43 +4,45 @@ using System.Collections;
 using UnityEngine;
 using WeatherApp.Utils;
 
-/// <summary>
-/// Class to handle getting the gps location of the device.
-/// </summary>
-public class GPSManager : SingletonBehaviour<GPSManager>
+namespace WeatherApp.Location
 {
     /// <summary>
-    /// Holds the last location.
+    /// Class to handle getting the gps location of the device.
     /// </summary>
-    private LocationCoordinates _lastLocation;
-
-    /// <summary>
-    /// Getting the last used location.
-    /// </summary>
-    public LocationCoordinates LastLocation => _lastLocation;
-
-    /// <summary>
-    /// Event for when the location is gotten.
-    /// </summary>
-    public Action<LocationCoordinates> onGetLocation;
-
-    /// <summary>
-    /// Get Location.
-    /// </summary>
-    private void Awake() => StartCoroutine(GetLocation());
-
-    /// <summary>
-    /// Getting the location.
-    /// </summary>
-    private IEnumerator GetLocation()
+    public class GPSManager : SingletonBehaviour<GPSManager>
     {
+        /// <summary>
+        /// Holds the last location.
+        /// </summary>
+        private LocationCoordinates _lastLocation;
+
+        /// <summary>
+        /// Getting the last used location.
+        /// </summary>
+        public LocationCoordinates LastLocation => _lastLocation;
+
+        /// <summary>
+        /// Event for when the location is gotten.
+        /// </summary>
+        public Action<LocationCoordinates> onGetLocation;
+
+        /// <summary>
+        /// Get Location.
+        /// </summary>
+        private void Awake() => StartCoroutine(GetLocation());
+
+        /// <summary>
+        /// Getting the location.
+        /// </summary>
+        private IEnumerator GetLocation()
+        {
 #if UNITY_EDITOR
-        LocationCoordinates location = new(52.64, 5.06);
+            LocationCoordinates location = new(52.64, 5.06);
 
-        yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(2f);
 
-        _lastLocation = location;
-        onGetLocation?.Invoke(location);
+            _lastLocation = location;
+            onGetLocation?.Invoke(location);
 #else
         if (!Input.location.isEnabledByUser)
         {
@@ -60,5 +62,6 @@ public class GPSManager : SingletonBehaviour<GPSManager>
         _lastLocation = location;
         onGetLocation?.Invoke(location);
 #endif
+        }
     }
 }
