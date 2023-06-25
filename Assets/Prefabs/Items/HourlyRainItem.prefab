@@ -804,7 +804,7 @@ MonoBehaviour:
   _valueSuffix: mm
   _weatherImage: {fileID: 5592371222703599880}
   _background: {fileID: 5592371221738176823}
-  _baseColor: {r: 0, g: 0, b: 0, a: 1}
+  _baseColor: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
   _offColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
 --- !u!1 &7415322378854778749
 GameObject:
@@ -979,7 +979,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -2.5}
-  m_SizeDelta: {x: 0, y: 5}
+  m_SizeDelta: {x: 700, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2049861960621830619
 CanvasRenderer:

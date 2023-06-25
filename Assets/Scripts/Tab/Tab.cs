@@ -42,12 +42,14 @@ namespace WeatherApp.Tabs
         /// <summary>
         /// The initial color of the tab.
         /// </summary>
-        private Color _initialColor;
+        protected Color p_initialColor;
 
         /// <summary>
         /// Reference to the tab manager holding this tab.
         /// </summary>
         private TabManager _tabManager;
+
+        internal Color SelectedColor => _selectedColor;
 
         /// <summary>
         /// Setting references and set it to selected is startsOn is true.
@@ -56,7 +58,7 @@ namespace WeatherApp.Tabs
         {
             _button = GetComponent<Button>();
             _roundedImage = GetComponent<RoundedImage>();
-            _initialColor = _roundedImage.color;
+            p_initialColor = _roundedImage.color;
 
             if (_startsOn)
                 Select();
@@ -86,11 +88,11 @@ namespace WeatherApp.Tabs
         /// <summary>
         /// Setting the color of this tab to selected.
         /// </summary>
-        public void Select() => _roundedImage.color = _selectedColor;
+        public virtual void Select() => _roundedImage.color = _selectedColor;
         
         /// <summary>
         /// Setting the color of this tab to deselected.
         /// </summary>
-        public void Deselect() => _roundedImage.color = _initialColor;
+        public virtual void Deselect() => _roundedImage.color = p_initialColor;
     }
 }
