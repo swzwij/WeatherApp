@@ -8,45 +8,94 @@ using WeatherApp.Location;
 
 namespace WeatherApp.WeatherSystem
 {
+    /// <summary>
+    /// Class to handle the daylight cycle.
+    /// </summary>
     public class DaylightCycle : MonoBehaviour
     {
+        /// <summary>
+        /// Reference to the sun rect.
+        /// </summary>
         [SerializeField]
         private RectTransform _sunRect;
 
+        /// <summary>
+        /// Reference to the circle rect.
+        /// </summary>
         [SerializeField]
         private RectTransform _circleRect;
 
+        /// <summary>
+        /// Reference to the sunrise rect.
+        /// </summary>
         [SerializeField]
         private RectTransform _sunriseRect;
 
+        /// <summary>
+        /// Reference to the sunset rect.
+        /// </summary>
         [SerializeField]
         private RectTransform _sunsetRect;
 
+        /// <summary>
+        /// Reference to teh sunrise text.
+        /// </summary>
         [SerializeField]
         private TMP_Text _sunriseText;
 
+        /// <summary>
+        /// Reference to the sunset text.
+        /// </summary>
         [SerializeField]
         private TMP_Text _sunsetText;
 
+        /// <summary>
+        /// The color of the day.
+        /// </summary>
         [SerializeField]
         private Color _dayColor;
 
+        /// <summary>
+        /// The color of the night.
+        /// </summary>
         [SerializeField]
         private Color _nightColor;
 
+        /// <summary>
+        /// Reference to the sun image.
+        /// </summary>
         [SerializeField]
         private RoundedImage _sunImage;
 
+        /// <summary>
+        /// The radius of the circle.
+        /// </summary>
         private const float CIRCLE_RADIUS = 362.5f;
 
+        /// <summary>
+        /// The value of the sunrise position.
+        /// </summary>
         private float _sunriseValue;
 
+        /// <summary>
+        /// The value of the sunset position.
+        /// </summary>
         private float _sunsetValue;
 
-        private void OnEnable() => GPSManager.Instance.onGetLocation += GetDaylightData;  
+        /// <summary>
+        /// Setting the onGetLocation listener.
+        /// </summary>
+        private void OnEnable() => GPSManager.Instance.onGetLocation += GetDaylightData;
 
+        /// <summary>
+        /// Remove the onGetLocation listener.
+        /// </summary>
         private void OnDisable() => GPSManager.Instance.onGetLocation -= GetDaylightData;
         
+        /// <summary>
+        /// Making the daylight API call and setting the data.
+        /// </summary>
+        /// <param name="location">The current location.</param>
         private void GetDaylightData(LocationCoordinates location)
         {
             Action<DaylightCycleData> onComplete = (response) =>
@@ -72,6 +121,11 @@ namespace WeatherApp.WeatherSystem
             APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
+        /// <summary>
+        /// Convert the time into a circle position value.
+        /// </summary>
+        /// <param name="dateTimeString">The current date and time.</param>
+        /// <returns>The circle position value.</returns>
         private int CovertTimeToCircleValue(string dateTimeString)
         {
             DateTime dateTime = DateTime.Parse(dateTimeString);
@@ -82,6 +136,11 @@ namespace WeatherApp.WeatherSystem
             return (hour * 60) + minute;
         }
 
+        /// <summary>
+        /// Set the sun time.
+        /// </summary>
+        /// <param name="dateTimeString">The current dat and time.</param>
+        /// <returns>The time string.</returns>
         private string GetSunTime(string dateTimeString)
         {
             DateTime dateTime = DateTime.Parse(dateTimeString);
@@ -95,6 +154,11 @@ namespace WeatherApp.WeatherSystem
             return $"{hourString}:{minuteString}";
         }
 
+        /// <summary>
+        /// Ficing the time format.
+        /// </summary>
+        /// <param name="value">Time int.</param>
+        /// <returns>The string of the correct value.</returns>
         private string FixTimeFormat(int value)
         {
             string String = $"{value}";
@@ -105,6 +169,11 @@ namespace WeatherApp.WeatherSystem
             return String;
         }
 
+        /// <summary>
+        /// Set the postion of the sun on the circle.
+        /// </summary>
+        /// <param name="sunTransform">The sun rect.</param>
+        /// <param name="circleTransform">The circle rect.</param>
         private void SetSunPosition(RectTransform sunTransform, RectTransform circleTransform)
         {
             DateTime currentTime = DateTime.Now;
@@ -117,6 +186,13 @@ namespace WeatherApp.WeatherSystem
             SetUIObjectPosition(newMinutes, circleTransform, sunTransform, CIRCLE_RADIUS);
         }
 
+        /// <summary>
+        /// Set a UI object on the circle.
+        /// </summary>
+        /// <param name="value">The value of where the object is going 0-100.</param>
+        /// <param name="circleTransform">The circle rect.</param>
+        /// <param name="objectTransform">The object rect.</param>
+        /// <param name="radius">The radius of the circle.</param>
         public void SetUIObjectPosition(float value, RectTransform circleTransform, RectTransform objectTransform, float radius)
         {
             float angle = Mathf.Lerp(0f, 360f, value / 100f);

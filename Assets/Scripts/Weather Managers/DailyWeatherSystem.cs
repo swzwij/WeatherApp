@@ -6,18 +6,37 @@ using WeatherApp.Location;
 
 namespace WeatherApp.WeatherSystem
 {
+    /// <summary>
+    /// Class to handle the daily weather.
+    /// </summary>
     public class DailyWeatherSystem : MonoBehaviour
     {
+        /// <summary>
+        /// Reference to the daily item prefab.
+        /// </summary>
         [SerializeField]
         private DailyItem _dailyItem;
 
+        /// <summary>
+        /// Reference to the transform where the items get instantiated under.
+        /// </summary>
         [SerializeField]
         private Transform _dailyContentTransform;
 
+        /// <summary>
+        /// Setting onGetLocation listener.
+        /// </summary>
         private void OnEnable() => GPSManager.Instance.onGetLocation += GetDailyWeather;
 
+        /// <summary>
+        /// Removing onGetLocation listener.
+        /// </summary>
         private void OnDisable() => GPSManager.Instance.onGetLocation -= GetDailyWeather;
 
+        /// <summary>
+        /// Making the call to the API and getting the daily weather.
+        /// </summary>
+        /// <param name="location">The current location.</param>
         private void GetDailyWeather(LocationCoordinates location)
         {
             Action<DailyData> onComplete = (response) => HandleDailyReponse(response);
@@ -32,6 +51,10 @@ namespace WeatherApp.WeatherSystem
             APIManager.Instance.GetCall(request, onComplete, onFailure);
         }
 
+        /// <summary>
+        /// Handle the data from the API.
+        /// </summary>
+        /// <param name="response">The data from the API.</param>
         private void HandleDailyReponse(DailyData response)
         {
             DailyData.DailyTemperatureData data = response.daily;
