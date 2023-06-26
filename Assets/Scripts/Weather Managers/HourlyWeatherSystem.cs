@@ -116,6 +116,10 @@ namespace WeatherApp.WeatherSystem
             {
                 float temp = data.temperature_2m[i];
 
+                string time = data.time[i][^5..];
+                if (IsPastDate(currentDateTime, time, data.time[i][^8..][..2]))
+                    continue;
+
                 if (temp > maxTemp)
                     maxTemp = temp;
                 if (temp < minTemp)
@@ -125,13 +129,7 @@ namespace WeatherApp.WeatherSystem
             for (int i = 0; i < data.time.Length; i++)
             {
                 string time = data.time[i][^5..];
-                string timeHour = time[..2];
-                int hour = int.Parse(timeHour);
-
-                string dayString = data.time[i][^8..][..2];
-                int dayInt = int.Parse(dayString);
-
-                if (dayInt == currentDateTime.Day && hour < currentDateTime.Hour || dayInt != currentDateTime.Day && hour > currentDateTime.Hour)
+                if (IsPastDate(currentDateTime, time, data.time[i][^8..][..2]))
                     continue;
 
                 float temp = data.temperature_2m[i];
@@ -140,6 +138,16 @@ namespace WeatherApp.WeatherSystem
                 item.Init(time, temp, data.weathercode[i], minTemp, maxTemp, i);
                 _temperatureItems.Add(item);
             }
+        }
+
+        private bool IsPastDate(DateTime currentDateTime, string time, string day)
+        {
+            string timeHour = time[..2];
+            int hour = int.Parse(timeHour);
+
+            int dayInt = int.Parse(day);
+
+            return dayInt == currentDateTime.Day && hour < currentDateTime.Hour || dayInt != currentDateTime.Day && hour > currentDateTime.Hour;
         }
 
         /// <summary>
