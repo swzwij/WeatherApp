@@ -44,23 +44,23 @@ namespace WeatherApp.Location
             _lastLocation = location;
             onGetLocation?.Invoke(location);
 #else
-        if (!Input.location.isEnabledByUser)
-        {
-            Debug.Log("Location services are not enabled on the device.");
-            yield break;
-        }
+            if (!Input.location.isEnabledByUser)
+            {
+                Debug.Log("Location services are not enabled on the device.");
+                yield break;
+            }
 
-        Input.location.Start();
+            Input.location.Start();
 
-        yield return new WaitUntil(() => Input.location.status == LocationServiceStatus.Running);
+            yield return new WaitUntil(() => Input.location.status == LocationServiceStatus.Running);
 
-        LocationInfo locationInfo = Input.location.lastData;
-        LocationCoordinates location = new(locationInfo.latitude, locationInfo.longitude);
+            LocationInfo locationInfo = Input.location.lastData;
+            LocationCoordinates location = new(locationInfo.latitude, locationInfo.longitude);
 
-        Input.location.Stop();
+            Input.location.Stop();
 
-        _lastLocation = location;
-        onGetLocation?.Invoke(location);
+            _lastLocation = location;
+            onGetLocation?.Invoke(location);
 #endif
         }
     }
