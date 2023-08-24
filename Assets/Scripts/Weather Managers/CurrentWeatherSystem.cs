@@ -33,15 +33,23 @@ public class CurrentWeatherSystem : MonoBehaviour
 
     [SerializeField]
     private TMP_Text _windDirectionText;
-    
-    private void OnEnable() => GPSManager.Instance.onGetLocation += GetCurrentWeather;
-    
-    private void OnDisable() => GPSManager.Instance.onGetLocation -= GetCurrentWeather;
-    
+
+    private void OnEnable()
+    {
+        GPSManager.Instance.onGetLocation += GetCurrentWeather;
+        SearchButton.Instance.onSearchNewLocation += GetCurrentWeather;
+    }
+
+    private void OnDisable()
+    {
+        GPSManager.Instance.onGetLocation -= GetCurrentWeather;
+        SearchButton.Instance.onSearchNewLocation -= GetCurrentWeather;
+    }
+
     private void GetCurrentWeather(LocationCoordinates location)
     {
         Action<CurrentWeatherData> onComplete = (response) => HandleCurrentWeatherResponse(response);
-        Action onFailure = () => Debug.LogError("Failed to get hourly temperature");
+        Action onFailure = () => Debug.LogError("Failed to get current weather");
 
         CurrentWeatherRequest request = new(location.Latitude, location.Longitude);
         APIManager.Instance.GetCall(request, onComplete, onFailure);

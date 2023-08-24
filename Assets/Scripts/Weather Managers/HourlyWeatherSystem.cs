@@ -52,6 +52,9 @@ namespace WeatherApp.WeatherSystem
         {
             GPSManager.Instance.onGetLocation += GetHourlyTemperature;
             GPSManager.Instance.onGetLocation += GetHourlyRain;
+
+            SearchButton.Instance.onSearchNewLocation += GetHourlyTemperature;
+            SearchButton.Instance.onSearchNewLocation += GetHourlyRain;
         }
 
         /// <summary>
@@ -61,6 +64,9 @@ namespace WeatherApp.WeatherSystem
         { 
             GPSManager.Instance.onGetLocation -= GetHourlyTemperature;
             GPSManager.Instance.onGetLocation -= GetHourlyRain;
+
+            SearchButton.Instance.onSearchNewLocation -= GetHourlyTemperature;
+            SearchButton.Instance.onSearchNewLocation -= GetHourlyRain;
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace WeatherApp.API
                 yield break;
             }
 
-            T response = JsonUtility.FromJson<T>(webRequest.downloadHandler.text);
+            T response = JsonUtility.FromJson<T>(webRequest.downloadHandler.text.TrimStart('[').TrimEnd(']'));
             onComplete?.Invoke(response);
         }
     }

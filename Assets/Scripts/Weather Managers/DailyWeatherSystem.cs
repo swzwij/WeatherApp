@@ -26,12 +26,21 @@ namespace WeatherApp.WeatherSystem
         /// <summary>
         /// Setting onGetLocation listener.
         /// </summary>
-        private void OnEnable() => GPSManager.Instance.onGetLocation += GetDailyWeather;
+        private void OnEnable()
+        {
+            GPSManager.Instance.onGetLocation += GetDailyWeather;
+            SearchButton.Instance.onSearchNewLocation += GetDailyWeather;
+
+        }
 
         /// <summary>
         /// Removing onGetLocation listener.
         /// </summary>
-        private void OnDisable() => GPSManager.Instance.onGetLocation -= GetDailyWeather;
+        private void OnDisable()
+        {
+            GPSManager.Instance.onGetLocation -= GetDailyWeather;
+            SearchButton.Instance.onSearchNewLocation -= GetDailyWeather;
+        }
 
         /// <summary>
         /// Making the call to the API and getting the daily weather.

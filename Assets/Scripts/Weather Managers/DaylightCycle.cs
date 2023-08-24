@@ -85,13 +85,22 @@ namespace WeatherApp.WeatherSystem
         /// <summary>
         /// Setting the onGetLocation listener.
         /// </summary>
-        private void OnEnable() => GPSManager.Instance.onGetLocation += GetDaylightData;
+        private void OnEnable()
+        {
+            GPSManager.Instance.onGetLocation += GetDaylightData;
+            SearchButton.Instance.onSearchNewLocation += GetDaylightData;
+
+        }
 
         /// <summary>
         /// Remove the onGetLocation listener.
         /// </summary>
-        private void OnDisable() => GPSManager.Instance.onGetLocation -= GetDaylightData;
-        
+        private void OnDisable()
+        {
+            GPSManager.Instance.onGetLocation -= GetDaylightData;
+            SearchButton.Instance.onSearchNewLocation -= GetDaylightData;
+        }
+
         /// <summary>
         /// Making the daylight API call and setting the data.
         /// </summary>
