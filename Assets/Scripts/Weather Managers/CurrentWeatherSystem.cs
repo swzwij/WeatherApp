@@ -34,6 +34,9 @@ public class CurrentWeatherSystem : MonoBehaviour
     [SerializeField]
     private TMP_Text _windDirectionText;
 
+    [SerializeField]
+    private WeatherOverviewSystem _weatherOverviewSystem;
+
     private void OnEnable()
     {
         GPSManager.Instance.onGetLocation += GetCurrentWeather;
@@ -72,15 +75,23 @@ public class CurrentWeatherSystem : MonoBehaviour
             if (hourInt != currentHour)
                 continue;
 
-            _humidityText.text = $"{data.relativehumidity_2m[i]}%";
+            string apperentTemperature = $"{data.apparent_temperature[i]}°";
+            string precipitationProbability = $"{data.precipitation_probability[i]}%";
+            string precipitation = $"{data.precipitation[i]}mm";
+            string humidity = $"{data.relativehumidity_2m[i]}%";
+            string windSpeed = $"{data.windspeed_10m[i]}km/h";
+
+            _humidityText.text = humidity;
             _dewpointText.text = $"{data.dewpoint_2m[i]}°";
-            _apperentTemperatureText.text = $"{data.apparent_temperature[i]}°";
-            _precipitationProbabilityText.text = $"{data.precipitation_probability[i]}%";
-            _precipitationText.text = $"{data.precipitation[i]}mm";
+            _apperentTemperatureText.text = apperentTemperature;
+            _precipitationProbabilityText.text = precipitationProbability;
+            _precipitationText.text = precipitation;
             _cloudcoverText.text = $"{data.cloudcover[i]}%";
             _visibilityText.text = $"{data.visibility[i]}km";
-            _windSpeedText.text = $"{data.windspeed_10m[i]}km/h";
+            _windSpeedText.text = windSpeed;
             _windDirectionText.text = $"{data.winddirection_10m[i]}°";
+
+            _weatherOverviewSystem.InitOverview(apperentTemperature, precipitationProbability, precipitation, humidity, windSpeed);
         }
     }
 }

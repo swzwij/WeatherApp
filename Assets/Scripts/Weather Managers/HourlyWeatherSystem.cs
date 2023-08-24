@@ -31,6 +31,12 @@ namespace WeatherApp.WeatherSystem
         private Transform _contentTransform;
 
         /// <summary>
+        /// Reference to the weather overview system.
+        /// </summary>
+        [SerializeField]
+        private WeatherOverviewSystem _weatherOverviewSystem;
+
+        /// <summary>
         /// List of rain items.
         /// </summary>
         private List<HourlyItem> _rainItems = new();
@@ -132,6 +138,8 @@ namespace WeatherApp.WeatherSystem
                     minTemp = temp;
             }
 
+            bool isFirst = false;
+
             for (int i = 0; i < data.time.Length; i++)
             {
                 string time = data.time[i][^5..];
@@ -139,6 +147,12 @@ namespace WeatherApp.WeatherSystem
                     continue;
 
                 float temp = data.temperature_2m[i];
+
+                if (isFirst == false)
+                {
+                    _weatherOverviewSystem.InitTemperature(temp);
+                    isFirst = true;
+                }
 
                 HourlyItem item = Instantiate(_hourlyTemperatureItem, _contentTransform);
                 item.Init(time, temp, data.weathercode[i], minTemp, maxTemp, i);
