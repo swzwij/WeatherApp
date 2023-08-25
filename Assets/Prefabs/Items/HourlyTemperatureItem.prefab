@@ -802,7 +802,7 @@ MonoBehaviour:
   _valueText: {fileID: 7415322378854778751}
   _valueTransform: {fileID: 7415322378854778750}
   _valueSuffix: "\xB0"
-  _weatherImage: {fileID: 8081183109465547990}
+  _weatherIcon: {fileID: 5592371222703599880}
   _background: {fileID: 5592371221738176823}
   _baseColor: {r: 0.050980393, g: 0.050980393, b: 0.050980393, a: 1}
   _offColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}

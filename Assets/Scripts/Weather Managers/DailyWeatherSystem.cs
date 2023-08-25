@@ -96,7 +96,7 @@ namespace WeatherApp.WeatherSystem
             for (int i = 0; i < data.time.Length; i++)
             {
                 DailyItem item = Instantiate(_dailyItem, _dailyContentTransform);
-                item.Init(data.time[i], data.temperature_2m_min[i], data.temperature_2m_max[i], data.precipitation_sum[i], data.windspeed_10m_max[i], data.winddirection_10m_dominant[i], maxTemp, minTemp, i, minRain, maxRain);
+                item.Init(data.time[i], data.temperature_2m_min[i], data.temperature_2m_max[i], data.precipitation_sum[i], data.windspeed_10m_max[i], data.winddirection_10m_dominant[i], maxTemp, minTemp, i, minRain, maxRain, data.weathercode[i]);
             }
         }
     }

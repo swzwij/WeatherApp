@@ -39,7 +39,7 @@ namespace WeatherApp.WeatherSystem
         /// Reference to the weather image.
         /// </summary>
         [SerializeField]
-        private Image _weatherImage;
+        private Image _weatherIcon;
 
         /// <summary>
         /// Reference to the background.
@@ -99,6 +99,8 @@ namespace WeatherApp.WeatherSystem
             SetValue(value, minValue, maxValue);
 
             _background.color = genNumber % 2 == 0 ? _baseColor : _offColor;
+
+            _weatherIcon.sprite = WeatherCodeLibrary.Instance.GetIcon(weatherCode);
         }
     }
 }

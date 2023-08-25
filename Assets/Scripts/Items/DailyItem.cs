@@ -1,6 +1,7 @@
 using DTT.UI.ProceduralUI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using WeatherApp.Utils;
 
 namespace WeatherApp.WeatherSystem
@@ -77,6 +78,12 @@ namespace WeatherApp.WeatherSystem
         private TMP_Text timeText;
 
         /// <summary>
+        /// Reference to the weather icon.
+        /// </summary>
+        [SerializeField]
+        private Image weatherIcon;
+
+        /// <summary>
         /// Initialize the daily item.
         /// </summary>
         /// <param name="date">The date of the item.</param>
@@ -90,7 +97,7 @@ namespace WeatherApp.WeatherSystem
         /// <param name="genNumber">What number item this is.</param>
         /// <param name="precipitaionSumMin">The overall min rain of the next week.</param>
         /// <param name="precipitaionSumMax">The overall max rain of the next week.</param>
-        public void Init(string date, float minTemp, float maxTemp, float precipitaionSum, float windspeed, int windDirection, float overallMaxTemp, float overallMinTemp, int genNumber, float precipitaionSumMin, float precipitaionSumMax)
+        public void Init(string date, float minTemp, float maxTemp, float precipitaionSum, float windspeed, int windDirection, float overallMaxTemp, float overallMinTemp, int genNumber, float precipitaionSumMin, float precipitaionSumMax, int weatherCode)
         {
             minTemperatureText.text = $"{minTemp}";
             maxTemperatureText.text = $"{maxTemp}";
@@ -107,6 +114,8 @@ namespace WeatherApp.WeatherSystem
             precipitaionSumText.text = $"{precipitaionSum}mm";
 
             timeText.text = DateUtils.GetDayOfWeek(date);
+
+            weatherIcon.sprite = WeatherCodeLibrary.Instance.GetIcon(weatherCode);
         }
 
         /// <summary>

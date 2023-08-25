@@ -240,6 +240,7 @@ MonoBehaviour:
   precipitaionSumText: {fileID: 533565449711249353}
   tempBar: {fileID: 7569071366050435385}
   timeText: {fileID: 947725272201504811}
+  weatherIcon: {fileID: 2761388854687013231}
 --- !u!1 &947725272201504813
 GameObject:
   m_ObjectHideFlags: 0
